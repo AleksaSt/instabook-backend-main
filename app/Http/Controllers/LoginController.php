@@ -13,7 +13,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->only(['email', 'password']);
-            
+
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['errors' => ['credentials' => ['Invalid credentials.']]], 401);
@@ -24,6 +24,6 @@ class LoginController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        return response()->json(['token' => $token, 'userId' => $user->id]);
+        return response()->json(['token' => $token, 'user' => $user]);
     }
 }
